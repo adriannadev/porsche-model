@@ -1,4 +1,7 @@
-# How to run
+
+The live app can be found on https://adriannadev.github.io/porsche-model/
+
+# How to run locally
 The app has to be run on a server due to the browser's same origin policy security restrictions. You can simply open the files in VS Code and install Live Server plugin. RIght click on index.html file and select Open with Live Server.
 
 You can also run the app using Node.js http-server.
