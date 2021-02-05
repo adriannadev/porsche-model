@@ -75,10 +75,14 @@ a:hover {
 
 @media screen and (max-width: 800px) {
 
+    h1 {
+      font-size: 30px;
+
+    }
     .info {
         right: 0;
         left: 0;
-        top: 76vh;
+        top: 75vh;
         width: 100vw;
         font-size: 12px;
         padding: 0.5em 1em;
