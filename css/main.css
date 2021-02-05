@@ -1,14 +1,18 @@
 body {
   margin: 0;
   height: 100vh;
+  width: 100vw;
   font-family: "Open Sans", sans-serif;
+}
+* {
+  box-sizing: border-box;
 }
 
 h1 {
   position: absolute;
-  width: 100%;
+  width: 100vw;
   text-align: center;
-  margin: 0 auto;
+  margin: 0 0;
   color: white;
   background: rgba(0, 0, 0, 0.6);
   padding: 0.5em;
@@ -18,16 +22,17 @@ h1 {
 
 h2 {
   color: white;
+  margin: 0 0;
+  padding: 0.5em;
 }
 
 footer {
   font-size: 12px;
-  bottom: 10px;
+  bottom: 1vh;
   position: absolute;
-  width: 100%;
+  width: 100vw;
   color: #7e7e7e;
   text-align: center;
-  width: 100%;
 }
 a {
   text-decoration: none;
@@ -66,4 +71,32 @@ a:hover {
   border-radius: 0.5em;
   width: 200px;
   padding: 1em;
+}
+
+@media screen and (max-width: 800px) {
+
+    .info {
+        right: 0;
+        left: 0;
+        top: 76vh;
+        width: 100vw;
+        font-size: 12px;
+        padding: 0.5em 1em;
+      }
+      .info p {
+        padding: 0.5em;
+        margin: 0;
+      }
+      footer{
+        bottom: 1vh;
+      }
+
+      .annotation {
+        top: 20vh;
+        left: 5vw;
+        width: 60vw;
+        font-size: 12px;
+        visibility: hidden;
+
+      }
 }
