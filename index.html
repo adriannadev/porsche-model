@@ -116,11 +116,18 @@
       }
 
 
-      //Raycasting for mouse clicks
+      //Raycasting for mouse clicks and touchscreen
       let rayCast = new THREE.Raycaster();
       var mouse = new THREE.Vector2();
 
       document.addEventListener('click', onMouseClick);
+      document.addEventListener('touchstart', onTouchStart);
+      
+      function onTouchStart(event){
+        event.clientX = event.touches[0].pageX;
+        event.clientY = event.touches[0].pageY;
+        onMouseClick(event);
+      }
 
       function onMouseClick(event){
         mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
