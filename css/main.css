@@ -77,12 +77,13 @@ a:hover {
 
     h1 {
       font-size: 30px;
+      height: 20vh;
 
     }
     .info {
         right: 0;
         left: 0;
-        top: 20vh;
+        top: 21vh;
         width: 100vw;
         font-size: 12px;
         padding: 0.5em 1em;
