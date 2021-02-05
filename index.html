@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Porsche Model</title>
+   <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+   <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div class="heading"><h1> Discover Porsche 991 Carrera 4S</h1></div>
+    <div class="annotation" id="hotspot1">
+			<h2>Timeless Design.</h2></p>
+			<p>A timeless design, a contemporary interpretation. The unmistakable silhouette of the 911 is characterised by its iconic flyline. It has barely changed since 1963, and has shaped the DNA of all Porsche models.
+        </p>
+    </div>    
+    <div class="annotation" id="hotspot2">
+      <h2>Comfort.</h2>
+      <p>Power athlete. Design icon. Everyday hero. The 911 combines the power of a sports car with great interior comfort and the latest technology to make your everyday life easier.</p>
+    </div>
+    <div class="info">
+      <h2>How To Use</h2>
+      <p>Use your mouse to move the car. You can zoom in using scroll. Click on the hotspots to find out more information</p>
+    </div>
+    <div id="number" width="64" height="64"></div>
+    <div id="number2" width="64" height="64"></div>
+    <footer><p>This work is based on <a href="https://sketchfab.com/3d-models/free-porsche-911-carrera-4s-d01b254483794de3819786d93e0e1ebf" target="_blank">Porsche 911 Carrera 4S</a> by <a href="https://sketchfab.com/karolmiklas" target="_blank">Karol Miklas</a> licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC-BY-SA-4.0</a></p></footer>
+    <script src="js/three.js"></script>
+    <script src="js/GLTFLoader.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script>
+
+      //Scene
+      let scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x2d2d2d);
+
+      //Camera
+      let camera = new THREE.PerspectiveCamera(
+        40,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        5000
+      );
+
+      camera.position.set(0, 0.2, 3);
+
+      //Lights
+      let ambientLight = new THREE.AmbientLight(0x404040, 20);
+      scene.add(ambientLight);
+
+      let directionalLight = new THREE.DirectionalLight(0xffffff,5);
+      directionalLight.position.set(0,1,0);
+      directionalLight.castShadow = true;
+      scene.add(directionalLight);
+
+      let pointLight1 = new THREE.PointLight(0xc4c4c4,10);
+      pointLight1.position.set(10,3,0);
+      scene.add(pointLight1);
+
+      let pointLight2 = new THREE.PointLight(0xc4c4c4,10);
+      pointLight2.position.set(-10,3,0);
+      scene.add(pointLight2);
+
+      //Renderer
+      let renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      //Responsive window resize
+    window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth,window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+
+    camera.updateProjectionMatrix();
+})
+
+      //Orbit Controls
+      let controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.addEventListener('change', renderer);
+
+    // Hotspots
+    let geometry = new THREE.PlaneGeometry(0.05, 0.05);
+    let texture = new THREE.TextureLoader().load( "texture1.jpg" );
+    let material = new THREE.MeshBasicMaterial({ map: texture});
+    let hotSpot1 = new THREE.Mesh(geometry, material);
+    hotSpot1.position.set(0.2, 0.2, 0.3);
+    scene.add(hotSpot1);
+
+    let geometry2 = new THREE.PlaneGeometry(0.05, 0.05);
+    let texture2 = new THREE.TextureLoader().load( "texture2.jpg" );
+    let material2 = new THREE.MeshBasicMaterial({ map: texture2});
+    let hotSpot2 = new THREE.Mesh(geometry2, material2);
+    hotSpot2.position.set(-0.2, 0.1, 0.8);
+    scene.add(hotSpot2);
+
+      //GLTF Loader
+      let car;
+      let loader = new THREE.GLTFLoader();
+      loader.load("scene.gltf", function (gltf) {
+        car = gltf.scene;
+        car.scale.set(0.5, 0.5, 0.5);
+        scene.add(car);
+        animate();
+      });
+
+      //Animate orbit controls
+      function animate(){
+          renderer.render(scene, camera);
+          hotSpot1.lookAt(camera.position);
+          hotSpot2.lookAt(camera.position);
+          requestAnimationFrame(animate);
+      }
+
+
+//Raycasting for mouse clicks
+let rayCast = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
+
+document.addEventListener('click', onMouseClick);
+
+function onMouseClick(event){
+  mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+  mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  mouse.z = 1;
+  rayCast.setFromCamera(mouse, camera);
+
+  //Check if the intersected object is one of the hotpspots and display corresponding information
+let intersects = rayCast.intersectObjects(scene.children, true);
+intersects.forEach((obj) => {
+
+  if(obj.object.uuid == hotSpot1.uuid){
+    if(document.querySelector("#hotspot1").style.visibility == "visible"){
+      document.querySelector("#hotspot1").style.visibility = "hidden"
+    } else {
+      document.querySelector("#hotspot2").style.visibility = "hidden";
+      document.querySelector("#hotspot1").style.visibility = "visible"; 
+    }
+  }
+ if(obj.object.uuid == hotSpot2.uuid){
+    if(document.querySelector("#hotspot2").style.visibility === "visible"){
+      document.querySelector("#hotspot2").style.visibility = "hidden";
+    } else {
+      document.querySelector("#hotspot1").style.visibility= "hidden";
+      document.querySelector("#hotspot2").style.visibility = "visible"; 
+    }
+  }
+});
+}
+    </script>
+  </body>
+</html>
