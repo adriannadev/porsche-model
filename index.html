@@ -26,6 +26,7 @@
       <h2>How To Use</h2>
       <p>Use your mouse to move the car. You can zoom in using scroll. Click on the hotspots to find out more information</p>
     </div>
+    <div id="loading"></div>
     <div id="number" width="64" height="64"></div>
     <div id="number2" width="64" height="64"></div>
     <footer><p>This work is based on <a href="https://sketchfab.com/3d-models/free-porsche-911-carrera-4s-d01b254483794de3819786d93e0e1ebf" target="_blank">Porsche 911 Carrera 4S</a> by <a href="https://sketchfab.com/karolmiklas" target="_blank">Karol Miklas</a> licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC-BY-SA-4.0</a></p></footer>
@@ -81,6 +82,15 @@
       let controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.addEventListener('change', renderer);
 
+      //Loading screen
+      var manager = new THREE.LoadingManager();
+      manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+      document.getElementById("loading").innerHTML = "<h1>Loading...</h1>";
+      if ( itemsLoaded == itemsTotal){
+        document.getElementById("loading").innerHTML = "";
+        } 
+      };
+
     // Hotspots
       let geometry = new THREE.PlaneGeometry(0.05, 0.05);
       let texture = new THREE.TextureLoader().load( "textures/texture1.jpg" );
@@ -98,7 +108,7 @@
 
       //GLTF Loader
       let car;
-      let loader = new THREE.GLTFLoader();
+      let loader = new THREE.GLTFLoader(manager);
       loader.load("scene.gltf", function (gltf) {
         car = gltf.scene;
         car.scale.set(0.5, 0.5, 0.5);

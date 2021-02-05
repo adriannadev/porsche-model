@@ -105,3 +105,11 @@ a:hover {
         visibility: hidden;
       }
 }
+
+#loading {
+  position: absolute;
+  margin: 0 auto;
+  top: 50vh;
+  background: none;
+
+}
