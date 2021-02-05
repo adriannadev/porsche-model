@@ -11,7 +11,7 @@
    <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="css/main.css" />
   </head>
-  <body><div class="container">
+  <body>
     <div class="heading"><h1> Discover Porsche 991 Carrera 4S</h1></div>
     <div class="annotation" id="hotspot1">
 			<h2>Timeless Design.</h2></p>
@@ -29,7 +29,6 @@
     <div id="number" width="64" height="64"></div>
     <div id="number2" width="64" height="64"></div>
     <footer><p>This work is based on <a href="https://sketchfab.com/3d-models/free-porsche-911-carrera-4s-d01b254483794de3819786d93e0e1ebf" target="_blank">Porsche 911 Carrera 4S</a> by <a href="https://sketchfab.com/karolmiklas" target="_blank">Karol Miklas</a> licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC-BY-SA-4.0</a></p></footer>
-  </div>
     <script src="js/three.js"></script>
     <script src="js/GLTFLoader.js"></script>
     <script src="js/OrbitControls.js"></script>
@@ -122,7 +121,7 @@
 
       document.addEventListener('click', onMouseClick);
       document.addEventListener('touchstart', onTouchStart);
-      
+
       function onTouchStart(event){
         event.clientX = event.touches[0].pageX;
         event.clientY = event.touches[0].pageY;
