@@ -71,31 +71,30 @@
       document.body.appendChild(renderer.domElement);
 
       //Responsive window resize
-    window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth,window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-
-    camera.updateProjectionMatrix();
-})
+      window.addEventListener('resize', () => {
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+    })
 
       //Orbit Controls
       let controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.addEventListener('change', renderer);
 
     // Hotspots
-    let geometry = new THREE.PlaneGeometry(0.05, 0.05);
-    let texture = new THREE.TextureLoader().load( "texture1.jpg" );
-    let material = new THREE.MeshBasicMaterial({ map: texture});
-    let hotSpot1 = new THREE.Mesh(geometry, material);
-    hotSpot1.position.set(0.2, 0.2, 0.3);
-    scene.add(hotSpot1);
+      let geometry = new THREE.PlaneGeometry(0.05, 0.05);
+      let texture = new THREE.TextureLoader().load( "textures/texture1.jpg" );
+      let material = new THREE.MeshBasicMaterial({ map: texture});
+      let hotSpot1 = new THREE.Mesh(geometry, material);
+      hotSpot1.position.set(0.2, 0.2, 0.3);
+      scene.add(hotSpot1);
 
-    let geometry2 = new THREE.PlaneGeometry(0.05, 0.05);
-    let texture2 = new THREE.TextureLoader().load( "texture2.jpg" );
-    let material2 = new THREE.MeshBasicMaterial({ map: texture2});
-    let hotSpot2 = new THREE.Mesh(geometry2, material2);
-    hotSpot2.position.set(-0.2, 0.1, 0.8);
-    scene.add(hotSpot2);
+      let geometry2 = new THREE.PlaneGeometry(0.05, 0.05);
+      let texture2 = new THREE.TextureLoader().load( "textures/texture2.jpg" );
+      let material2 = new THREE.MeshBasicMaterial({ map: texture2});
+      let hotSpot2 = new THREE.Mesh(geometry2, material2);
+      hotSpot2.position.set(-0.2, 0.1, 0.8);
+      scene.add(hotSpot2);
 
       //GLTF Loader
       let car;
@@ -109,47 +108,47 @@
 
       //Animate orbit controls
       function animate(){
-          renderer.render(scene, camera);
-          hotSpot1.lookAt(camera.position);
-          hotSpot2.lookAt(camera.position);
-          requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+        hotSpot1.lookAt(camera.position);
+        hotSpot2.lookAt(camera.position);
+        requestAnimationFrame(animate);
       }
 
 
-//Raycasting for mouse clicks
-let rayCast = new THREE.Raycaster();
-var mouse = new THREE.Vector2();
+      //Raycasting for mouse clicks
+      let rayCast = new THREE.Raycaster();
+      var mouse = new THREE.Vector2();
 
-document.addEventListener('click', onMouseClick);
+      document.addEventListener('click', onMouseClick);
 
-function onMouseClick(event){
-  mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-  mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-  mouse.z = 1;
-  rayCast.setFromCamera(mouse, camera);
+      function onMouseClick(event){
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+        mouse.z = 1;
+        rayCast.setFromCamera(mouse, camera);
 
-  //Check if the intersected object is one of the hotpspots and display corresponding information
-let intersects = rayCast.intersectObjects(scene.children, true);
-intersects.forEach((obj) => {
+        //Check if the intersected object is one of the hotpspots and display corresponding information
+      let intersects = rayCast.intersectObjects(scene.children, true);
+      intersects.forEach((obj) => {
 
-  if(obj.object.uuid == hotSpot1.uuid){
-    if(document.querySelector("#hotspot1").style.visibility == "visible"){
-      document.querySelector("#hotspot1").style.visibility = "hidden"
-    } else {
-      document.querySelector("#hotspot2").style.visibility = "hidden";
-      document.querySelector("#hotspot1").style.visibility = "visible"; 
+        if(obj.object.uuid == hotSpot1.uuid){
+          if(document.querySelector("#hotspot1").style.visibility == "visible"){
+            document.querySelector("#hotspot1").style.visibility = "hidden"
+          } else {
+            document.querySelector("#hotspot2").style.visibility = "hidden";
+            document.querySelector("#hotspot1").style.visibility = "visible"; 
+          }
+        }
+      if(obj.object.uuid == hotSpot2.uuid){
+          if(document.querySelector("#hotspot2").style.visibility === "visible"){
+            document.querySelector("#hotspot2").style.visibility = "hidden";
+          } else {
+            document.querySelector("#hotspot1").style.visibility= "hidden";
+            document.querySelector("#hotspot2").style.visibility = "visible"; 
+          }
+        }
+      });
     }
-  }
- if(obj.object.uuid == hotSpot2.uuid){
-    if(document.querySelector("#hotspot2").style.visibility === "visible"){
-      document.querySelector("#hotspot2").style.visibility = "hidden";
-    } else {
-      document.querySelector("#hotspot1").style.visibility= "hidden";
-      document.querySelector("#hotspot2").style.visibility = "visible"; 
-    }
-  }
-});
-}
     </script>
   </body>
 </html>
