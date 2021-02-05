@@ -1,8 +1,14 @@
 # How to run
-* The app has to be run on a server due to the browser's same origin policy security restrictions.
+The app has to be run on a server due to the browser's same origin policy security restrictions. You can simply open the files in VS Code and install Live Server plugin. RIght click on index.html file and select Open with Live Server.
+
+You can also run the app using Node.js http-server.
 * Download the files
 * In terminal cd to the downloaded directory
-* Run command:
+* Run commands:
+
+````
+npm install http-server -g
+````
 ````
 http-server . -p 8000
 ````
